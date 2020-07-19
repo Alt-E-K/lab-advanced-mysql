@@ -1,4 +1,4 @@
-#CHALLENGE 1
+CHALLENGE 1
 use publications;
 
  select a.au_id, a.au_fname, a.au_lname ,round(total_advance+total_royalty_title,0) as total_profit from (select au_id, title_id, avg(advance_per_au) as total_advance, sum(royalty_per_sale) as total_royalty_title from (
@@ -24,7 +24,7 @@ order by total_profit DESC
 limit 3
 
 
-#CHALLENGE 2
+CHALLENGE 2
 
 create temporary table step_1
 	SELECT s.title_id, 
@@ -64,9 +64,11 @@ group by au_id
 order by total_profit DESC
 limit 3
 
-#CHALLENGE3
+CHALLENGE3
 
 create table most_profiting_authors 
-select a.au_id,round(advance+royaltyes_per_title,0) as total_profit from step2
+select a.au_id, a.au_fname, a.au_lname ,round(advance+royaltyes_per_title,0) as total_profit from step2
+join authors as a
+on a.au_id=step2.au_id
 group by au_id
 order by total_profit DESC
